@@ -210,7 +210,7 @@
         </p>
         <!-- BEGIN useAltJs:veil -->
         <div class="generatorSelect">
-            <select data-bind="altJs" data-action="refresh()">
+            <select data-bind="altJs" data-action-change="refresh()">
                 <option value="babel">babel</option>
                 <option value="coffee">coffee</option>
                 <option value="typescript">typescript</option>
@@ -427,13 +427,18 @@
     <div class="generatorTabWrap">
         <ul class="generatorTab">
             <li class="current"><a href="#" data-action="changeFileMode(package)">package.json</a></li>
+            <!-- BEGIN useBrowserify:touch#true -->
+            <li><a href="#" data-action="changeFileMode(babelrc)">.babelrc</a></li>
+            <!-- END useBrowserify:touch#true -->
         </ul>
     </div>
     <div class="generatorPanel">
     <button class="generatorBtn" data-action="packageCopy"><!-- BEGIN lang:touch#ja -->ソースをコピー<!-- END lang:touch#ja --><!-- BEGIN lang:touch#en -->Copy the source<!-- END lang:touch#en --></button>
     <button class="generatorBtn" data-action="downloadPackage"><!-- BEGIN lang:touch#ja -->パッケージをダウンロード<!-- END lang:touch#ja --><!-- BEGIN lang:touch#en -->Download the package<!-- END lang:touch#en --></button>
     <button class="generatorBtn" data-action="getZippedUrl"><!-- BEGIN lang:touch#ja -->URLを共有<!-- END lang:touch#ja --><!-- BEGIN lang:touch#en -->Share the URL<!-- END lang:touch#en --></button>
+        <!-- BEGIN fileMode:touch#package -->
         <pre><code class="language-javascript" data-id="package" id="jsoncode"></code>
+        <!-- END fileMode:touch#package -->
     </div>
 </div>
 </script>
@@ -468,6 +473,9 @@
     "serve": "browser-sync start --server --files \\"{cssDest}, {jsDest}, {htmlDest}, !node_modules/**/*.html\\""<!-- END useBrowserSync:touch#true -->,
     "build:css": "npm run scss && npm run autoprefixer",
     "build:js": "npm run lint && npm run uglify",
+    <!-- BEGIN useBrowserify:touch#true -->
+    "browserify": "browserify -t babelify {jsSrc} -o {jsDest}",
+    <!-- END useBrowserify:touch#true -->
     "build:images": "npm run imagemin && npm run icons",
     "build:all": "npm run build:css && npm run build:js && npm run build:images",
     "watch:css": "onchange \\"src/scss\\" -- npm run build:css",
